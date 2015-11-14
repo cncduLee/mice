@@ -3,7 +3,7 @@
  */
 package com.cubbery.log.mice.agent;
 
-import com.cubbery.log.mice.agent.parser.TailFileReader;
+import com.cubbery.log.mice.agent.parser.LogTailReader;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.apache.flume.Event;
 import org.apache.flume.SystemClock;
@@ -126,7 +126,7 @@ public class LogExecRunnable implements Runnable {
                                                               }
                                                           },
                 batchTimeout, batchTimeout, TimeUnit.MILLISECONDS);
-        TailFileReader tailFReader = new TailFileReader(reader, logConf);
+        LogTailReader tailFReader = new LogTailReader(reader, logConf);
         while (!Thread.interrupted()) {
             Event event = tailFReader.produceEvent();
             if (event == null) {

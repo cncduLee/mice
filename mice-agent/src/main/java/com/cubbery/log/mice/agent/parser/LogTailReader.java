@@ -32,8 +32,8 @@ import java.util.regex.Pattern;
  *
  * @version 1.0.0 <br>
  */
-public class TailFileReader {
-    private static final Logger logger = LoggerFactory.getLogger(TailFileReader.class);
+public class LogTailReader {
+    private static final Logger logger = LoggerFactory.getLogger(LogTailReader.class);
     public static final String LINE_SEPARATOR = "\r\n";
 
     private final BufferedReader reader;
@@ -48,7 +48,7 @@ public class TailFileReader {
     private final String zero = "0";
 
 
-    public TailFileReader(BufferedReader reader, LogConf logConf) {
+    public LogTailReader(BufferedReader reader, LogConf logConf) {
         this.reader = reader;
         this.pattern = Pattern.compile(logConf.getRegex());
         this.logConf = logConf;
@@ -75,14 +75,6 @@ public class TailFileReader {
         return matcher.group(logConf.getMsgGroupNo());
     }
 
-
-    /**
-     * 1.需要判断是否是有打印堆栈信息，如果有打印堆栈信息，则继续读取下一行
-     * 2.条件1需要有一个往下最大读取行数判断，以免oom 或者出bug
-     *
-     * @return 如果在行尾，有可能返回null，不代表文件结束
-     * @throws java.io.IOException
-     */
     public Event produceEvent() throws IOException {
         while (true) {
             line = reader.readLine();
@@ -102,7 +94,6 @@ public class TailFileReader {
                     if (stringBuilder.length() > 0) {
                         // 如果之前的消息存在，则返回
                         Event event = EventBuilder.withBody(stringBuilder.toString().getBytes(), headers);
-                        logger.info("create event : {}", stringBuilder);
                         // 确保清除上次事件的缓存
                         stringBuilder.delete(0, stringBuilder.length());
                         stringBuilder.append(getMsg(matcher));
@@ -110,7 +101,6 @@ public class TailFileReader {
                         return event;
                     } else {
                         // 如果之前没有内容，则初始化一个
-                        logger.info("init first line !");
                         headers = getHeaders(matcher);
                         stringBuilder.append(getMsg(matcher));
                     }
@@ -119,10 +109,9 @@ public class TailFileReader {
                         // 如果没找到，则append上
                         stringBuilder.append(LINE_SEPARATOR);
                         stringBuilder.append(line);
-                        logger.info("append to last line");
                     } else {
                         // stringBuilder还没有初始化，证明数据有问题，跳过
-                        logger.warn("skip !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! {}",line);
+                        logger.warn(" ################skip################ {}",line);
                     }
                 }
             }
