@@ -40,9 +40,6 @@ public class LogCollector implements ElasticSearchIndexRequestBuilderFactory {
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private final Gson gson = new GsonBuilder().serializeNulls().create();
 
-    private Context context;
-    private ComponentConfiguration conf;
-
 
     @Override
     public IndexRequestBuilder createIndexRequest(Client client, String indexPrefix, String indexType, Event event) throws IOException {
@@ -71,12 +68,10 @@ public class LogCollector implements ElasticSearchIndexRequestBuilderFactory {
 
     @Override
     public void configure(Context context) {
-        this.context = context;
     }
 
     @Override
     public void configure(ComponentConfiguration conf) {
-        this.conf = conf;
     }
 
     class Logs {
