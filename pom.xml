@@ -23,7 +23,7 @@
         <dependencies>
             <dependency>
                 <groupId>org.apache.flume</groupId>
-                <artifactId>flume-ng-core</artifactId>
+                <artifactId>flume-ng-node</artifactId>
                 <version>1.6.0</version>
                 <scope>provided</scope>
             </dependency>
