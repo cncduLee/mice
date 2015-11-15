@@ -7,8 +7,8 @@ LIB_DIR=$DEPLOY_DIR/lib
 LIB_JARS=`ls $LIB_DIR|grep .jar|awk '{print "'$LIB_DIR'/"$0}'|tr "\n" ":"`
 CON_DIR=$DEPLOY_DIR/conf
 
-export JAVA_HOME=/export/local/jdk1.6
-export JAVA_BIN=/export/local/jdk1.6/bin
+export JAVA_HOME=/usr/java/jdk1.8.0_65
+export JAVA_BIN=/usr/java/jdk1.8.0_65/bin
 export PATH=$JAVA_BIN:$PATH
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8

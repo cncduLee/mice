@@ -103,7 +103,7 @@ echo "AGENT_CONF_DIR: $AGENT_CONF_DIR"
 echo "ZK_ROOT: $ZK_ROOT"
 echo "AGENT_NAME: $AGENT_NAME"
 
-sh $FLUME_HOME/bin/flume-ng agent  --conf $AGENT_CONF_DIR -z $ZOOKEEPER -p $ZK_ROOT -n $AGENT_NAME --classpath $APP_JARS &
+sh $FLUME_HOME/bin/flume-ng avro-client  --conf $AGENT_CONF_DIR -z $ZOOKEEPER -p $ZK_ROOT -n $AGENT_NAME --classpath $APP_JARS &
 
 COUNT=0
 while [ $COUNT -lt 1 ]; do    
